@@ -25,7 +25,7 @@ describe('Thermostat', function() {
     while(i++ < DEFAULT_TEMP - MIN_TEMP) {
       thermostat.decreaseTemp();
     }
-    expect(function() {thermostat.decreaseTemp()}).toThrowError('Cannot exceed min. temperature');
+    expect(function() {thermostat.decreaseTemp()} ).toThrowError('Cannot exceed min. temperature!');
   });
 
   it('should have a maxTemp of 25 in default', function() {
@@ -45,5 +45,37 @@ describe('Thermostat', function() {
     expect(thermostat._maxTemp).toEqual(SAVE_MODE_MAX);
     expect(thermostat._saveStatus).toBe(true);
   });
+
+  it('should throw error if max temp exceed when power save mode is on', function() {
+    let i = 0;
+    while(i++ < thermostat._maxTemp - DEFAULT_TEMP) {
+      thermostat.increaseTemp();
+    }
+    expect(function() { thermostat.increaseTemp()} ).toThrowError('Cannot exceed max. temperature!')
+  });
+
+  it('should reset power save mode and temperature', function() {
+    thermostat.increaseTemp();
+    thermostat.saveModeOff();
+    thermostat.reset();
+    expect(thermostat._temp).toEqual(DEFAULT_TEMP);
+    expect(thermostat._saveStatus).toBe(true);
+    expect(thermostat._maxTemp).toEqual(SAVE_MODE_MAX);
+  });
+
+  it('should return LOW usage if temp is below 18', function() {
+    thermostat._temp = LOW_USAGE_LIMIT -1 ;
+    expect(thermostat.usage()).toEqual("LOW");
+  }); 
+
+  it('should return MEDIUM usage if temp is 18-25 inclusive', function() {
+    thermostat._temp = MEDIUM_USAGE_LIMIT -1 ;
+    expect(thermostat.usage()).toEqual("MEDIUM");
+  }); 
+
+  it('should return MEDIUM usage if temp is 18-25 inclusive', function() {
+    thermostat._temp = MEDIUM_USAGE_LIMIT +1 ;
+    expect(thermostat.usage()).toEqual("HIGH");
+  }); 
 
 });
