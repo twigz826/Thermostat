@@ -20,4 +20,12 @@ describe('Thermostat', function() {
     expect(thermostat._temp).toEqual(19);
   });
 
+  it('should throw an error if temp is decreased below 10', function() {
+    let i = 0;
+    while(i++ < 10) {
+      thermostat.decreaseTemp();
+    }
+    expect(function() {thermostat.decreaseTemp()}).toThrowError('Cannot exceed min. temperature');
+  });
+
 });
