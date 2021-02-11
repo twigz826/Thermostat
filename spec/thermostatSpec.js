@@ -73,7 +73,7 @@ describe('Thermostat', function() {
     expect(thermostat.usage()).toEqual("MEDIUM");
   }); 
 
-  it('should return MEDIUM usage if temp is 18-25 inclusive', function() {
+  it('should return HIGH usage if temp is greater than 25', function() {
     thermostat._temp = MEDIUM_USAGE_LIMIT +1 ;
     expect(thermostat.usage()).toEqual("HIGH");
   }); 
