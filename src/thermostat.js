@@ -8,14 +8,14 @@ const LOW_USAGE_LIMIT = 18;
 const MEDIUM_USAGE_LIMIT = 25;
 
 class Thermostat {
-  
+
   constructor() {
     this._temp = DEFAULT_TEMP;
     this._MINIMUM_TEMP = MIN_TEMP;
     this._maxTemp = SAVE_MODE_MAX;
-    this._saveStatus = true 
+    this._saveStatus = "on"
   }
-  
+
   increaseTemp() {
     if(this._temp === this._maxTemp) {
       throw new Error('Cannot exceed max. temperature!');
@@ -32,14 +32,14 @@ class Thermostat {
 
   saveModeOff() {
     this._maxTemp = SAVE_MODE_OFF_MAX;
-    this._saveStatus = false;
+    this._saveStatus = "off";
   }
 
   saveModeOn() {
     this._maxTemp = SAVE_MODE_MAX;
-    this._saveStatus = true;
+    this._saveStatus = "on";
   }
- 
+
   reset() {
     this.saveModeOn();
     this._temp = DEFAULT_TEMP;

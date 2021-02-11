@@ -30,20 +30,20 @@ describe('Thermostat', function() {
 
   it('should have a maxTemp of 25 in default', function() {
     expect(thermostat._maxTemp).toEqual(SAVE_MODE_MAX);
-    expect(thermostat._saveStatus).toBe(true);
+    expect(thermostat._saveStatus).toBe("on");
   });
 
   it('should have a maxTemp of 32 when power save mode is off', function() {
     thermostat.saveModeOff();
     expect(thermostat._maxTemp).toEqual(SAVE_MODE_OFF_MAX);
-    expect(thermostat._saveStatus).toBe(false);
+    expect(thermostat._saveStatus).toBe("off");
   });
 
   it('should be able to turn power save mode on', function() {
     thermostat.saveModeOff();
     thermostat.saveModeOn();
     expect(thermostat._maxTemp).toEqual(SAVE_MODE_MAX);
-    expect(thermostat._saveStatus).toBe(true);
+    expect(thermostat._saveStatus).toBe("on");
   });
 
   it('should throw error if max temp exceed when power save mode is on', function() {
@@ -59,23 +59,23 @@ describe('Thermostat', function() {
     thermostat.saveModeOff();
     thermostat.reset();
     expect(thermostat._temp).toEqual(DEFAULT_TEMP);
-    expect(thermostat._saveStatus).toBe(true);
+    expect(thermostat._saveStatus).toBe("on");
     expect(thermostat._maxTemp).toEqual(SAVE_MODE_MAX);
   });
 
   it('should return LOW usage if temp is below 18', function() {
     thermostat._temp = LOW_USAGE_LIMIT -1 ;
     expect(thermostat.usage()).toEqual("LOW");
-  }); 
+  });
 
   it('should return MEDIUM usage if temp is 18-25 inclusive', function() {
     thermostat._temp = MEDIUM_USAGE_LIMIT -1 ;
     expect(thermostat.usage()).toEqual("MEDIUM");
-  }); 
+  });
 
   it('should return HIGH usage if temp is greater than 25', function() {
     thermostat._temp = MEDIUM_USAGE_LIMIT +1 ;
     expect(thermostat.usage()).toEqual("HIGH");
-  }); 
+  });
 
 });
