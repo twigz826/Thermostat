@@ -1,6 +1,7 @@
-'Use strict';
+'use strict';
 
 describe('Thermostat', function() {
+
   let thermostat;
   beforeEach(function() {
     thermostat = new Thermostat();
@@ -21,28 +22,27 @@ describe('Thermostat', function() {
   });
 
   it('should throw an error if temp is decreased below 10', function() {
-    let i = 0;
-    while(i++ < DEFAULT_TEMP - MIN_TEMP) {
+    for (let i = 0; i < (DEFAULT_TEMP - MIN_TEMP); i++) {
       thermostat.decreaseTemp();
     }
     expect(function() {thermostat.decreaseTemp()} ).toThrowError('Cannot exceed min. temperature!');
   });
 
   it('should have a maxTemp of 25 in default', function() {
-    expect(thermostat._maxTemp).toEqual(SAVE_MODE_MAX);
+    expect(thermostat._maxTemp).toEqual(POWERSAVE_MODE_MAXTEMP);
     expect(thermostat._saveStatus).toBe("on");
   });
 
   it('should have a maxTemp of 32 when power save mode is off', function() {
     thermostat.saveModeOff();
-    expect(thermostat._maxTemp).toEqual(SAVE_MODE_OFF_MAX);
+    expect(thermostat._maxTemp).toEqual(POWERSAVE_MODE_OFF_MAXTEMP);
     expect(thermostat._saveStatus).toBe("off");
   });
 
   it('should be able to turn power save mode on', function() {
     thermostat.saveModeOff();
     thermostat.saveModeOn();
-    expect(thermostat._maxTemp).toEqual(SAVE_MODE_MAX);
+    expect(thermostat._maxTemp).toEqual(POWERSAVE_MODE_MAXTEMP);
     expect(thermostat._saveStatus).toBe("on");
   });
 
@@ -60,7 +60,7 @@ describe('Thermostat', function() {
     thermostat.reset();
     expect(thermostat._temp).toEqual(DEFAULT_TEMP);
     expect(thermostat._saveStatus).toBe("on");
-    expect(thermostat._maxTemp).toEqual(SAVE_MODE_MAX);
+    expect(thermostat._maxTemp).toEqual(POWERSAVE_MODE_MAXTEMP);
   });
 
   it('should return LOW usage if temp is below 18', function() {

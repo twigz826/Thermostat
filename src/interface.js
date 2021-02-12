@@ -38,7 +38,9 @@ $(document).ready(function() {
 
   function displayWeather(city) {
     let url = 'http://api.openweathermap.org/data/2.5/weather?q=' + city;
-    let token = '&appid=39f4e0936bb0edbcca55a829a6e33bc3';
+    let token = '&appid=xyz';
+    console.log("TOKEN REPLACES xyz")
+    console.log(token)
     let units = '&units=metric';
     $.get(url + token + units, function(data){
       $('#current-temperature').text(data.main.temp);
